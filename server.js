@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Setup CORS agar bisa diakses dari frontend lokal
+// Setup CORS agar bisa diakses dari frontend
 app.use(cors());
 
 // Setup folder penyimpanan file upload
@@ -26,6 +26,9 @@ if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads');
 }
 
+// Path CSV sebagai konstanta
+const CSV_PATH = path.join(__dirname, 'submissions.csv');
+
 // Endpoint untuk menerima form dukungan
 app.post('/submit', upload.single('proof'), (req, res) => {
   const { name, contact } = req.body;
@@ -36,15 +39,14 @@ app.post('/submit', upload.single('proof'), (req, res) => {
   }
 
   // Tulis ke submissions.csv (timestamp, name, contact, filename)
-  const csvPath = path.join(__dirname, 'submissions.csv');
   const timestamp = new Date().toISOString();
-  const line = `"${timestamp}","${name.replace(/\"/g, '""')}","${contact.replace(/\"/g, '""')}","${file.filename}"\n`;
+  const line = `"${timestamp}","${String(name).replace(/\"/g, '""')}","${String(contact).replace(/\"/g, '""')}","${file.filename}"\n`;
 
   try {
-    if (!fs.existsSync(csvPath)) {
-      fs.writeFileSync(csvPath, 'timestamp,name,contact,filename\n');
+    if (!fs.existsSync(CSV_PATH)) {
+      fs.writeFileSync(CSV_PATH, 'timestamp,name,contact,filename\n');
     }
-    fs.appendFileSync(csvPath, line);
+    fs.appendFileSync(CSV_PATH, line);
   } catch (e) {
     console.error('Gagal menulis CSV:', e);
     return res.status(500).json({ message: 'Gagal menyimpan data.' });
@@ -54,6 +56,32 @@ app.post('/submit', upload.single('proof'), (req, res) => {
   // TODO: Integrasi nodemailer jika ingin notifikasi email
 
   res.json({ message: 'Dukungan berhasil diterima!', filename: file.filename });
+});
+
+// Endpoint untuk mengunduh CSV
+app.get('/submissions.csv', (req, res) => {
+  if (!fs.existsSync(CSV_PATH)) {
+    return res.status(404).send('Belum ada data.');
+  }
+  res.sendFile(CSV_PATH);
+});
+
+// Endpoint untuk melihat entri sebagai JSON sederhana
+app.get('/entries', (req, res) => {
+  if (!fs.existsSync(CSV_PATH)) {
+    return res.json([]);
+  }
+  const raw = fs.readFileSync(CSV_PATH, 'utf8');
+  const lines = raw.trim().split(/\r?\n/);
+  const header = lines.shift();
+  const rows = lines.map(line => {
+    // parsing sangat sederhana untuk 4 kolom ter-quote
+    const match = line.match(/^"(.*?)","(.*?)","(.*?)","(.*?)"$/);
+    if (!match) return null;
+    const [, timestamp, name, contact, filename] = match;
+    return { timestamp, name, contact, filename, fileUrl: `/uploads/${filename}` };
+  }).filter(Boolean);
+  res.json(rows);
 });
 
 // Endpoint untuk akses file upload (opsional, untuk testing)
