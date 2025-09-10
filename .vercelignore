@@ -1,0 +1,8 @@
+api/
+server.js
+package.json
+package-lock.json
+node_modules/
+uploads/
+submissions.csv
+.env
