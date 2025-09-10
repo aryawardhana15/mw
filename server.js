@@ -8,14 +8,26 @@ const PORT = process.env.PORT || 3000;
 // Setup CORS agar bisa diakses dari frontend
 app.use(cors());
 
+// Helper untuk sanitasi nama ke bentuk slug aman file
+function toSafeSlug(input) {
+  return String(input || 'anon')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // hapus diakritik
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 50) || 'anon';
+}
+
 // Setup folder penyimpanan file upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+    const timestamp = Date.now();
+    const nameSlug = toSafeSlug(req.body && req.body.name);
+    const ext = path.extname(file.originalname || '').toLowerCase() || '.dat';
+    cb(null, `${timestamp}-${nameSlug}${ext}`);
   }
 });
 const upload = multer({ storage: storage });
