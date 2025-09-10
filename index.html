@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dukung Saya Jadi Mawapres Terfavorit | Codelab</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'codelab-orange': '#F97316',
+                        'codelab-dark': '#1F2937',
+                        'codelab-gray': '#F3F4F6',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'scale-up': 'scaleUp 0.3s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                            '100%': { transform: 'translateY(0px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .orange-gradient {
+            background: linear-gradient(135deg, #F97316, #EA580C);
+        }
+        
+        .orange-gradient-text {
+            background: linear-gradient(to right, #F97316, #EA580C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .orange-button {
+            background: linear-gradient(135deg, #F97316, #EA580C);
+            transition: all 0.3s ease;
+        }
+        
+        .orange-button:hover {
+            background: linear-gradient(135deg, #EA580C, #C2410C);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.7), 0 0 25px rgba(249, 115, 22, 0.5);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        .pattern-bg {
+            background-color: #f9fafb;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F97316' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #F97316;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #EA580C;
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="text-2xl font-bold orange-gradient-text flex items-center">
+                    <i class="fas fa-code mr-2 text-codelab-orange"></i>
+                    Codelab
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#beranda" class="text-gray-700 hover:text-codelab-orange font-medium transition flex items-center">
+                        <i class="fas fa-home mr-1"></i> Beranda
+                    </a>
+                    <a href="#cara-ikut" class="text-gray-700 hover:text-codelab-orange font-medium transition flex items-center">
+                        <i class="fas fa-question-circle mr-1"></i> Cara Ikut
+                    </a>
+                    <a href="#dukungan" class="text-gray-700 hover:text-codelab-orange font-medium transition flex items-center">
+                        <i class="fas fa-handshake mr-1"></i> Dukungan
+                    </a>
+                    <a href="#kontak" class="text-gray-700 hover:text-codelab-orange font-medium transition flex items-center">
+                        <i class="fas fa-envelope mr-1"></i> Kontak
+                    </a>
+                </div>
+                
+                <!-- CTA Button -->
+                <a href="https://simapres.netlify.app/voting/" class="orange-button text-white px-5 py-2 rounded-full font-medium hover-scale flex items-center">
+                    <i class="fas fa-vote-yea mr-2"></i> Vote Sekarang
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="#beranda" class="block py-2 text-gray-700 hover:text-codelab-orange font-medium flex items-center">
+                    <i class="fas fa-home mr-2"></i> Beranda
+                </a>
+                <a href="#cara-ikut" class="block py-2 text-gray-700 hover:text-codelab-orange font-medium flex items-center">
+                    <i class="fas fa-question-circle mr-2"></i> Cara Ikut
+                </a>
+                <a href="#dukungan" class="block py-2 text-gray-700 hover:text-codelab-orange font-medium flex items-center">
+                    <i class="fas fa-handshake mr-2"></i> Dukungan
+                </a>
+                <a href="#kontak" class="block py-2 text-gray-700 hover:text-codelab-orange font-medium flex items-center">
+                    <i class="fas fa-envelope mr-2"></i> Kontak
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="beranda" class="min-h-screen flex items-center justify-center px-4 py-16 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-64 h-64 rounded-full bg-codelab-orange opacity-10 blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-codelab-orange opacity-10 blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto max-w-4xl text-center relative z-10 animate-fade-in">
+            <!-- Profile Photo with floating animation -->
+            <div class="mb-8 flex justify-center">
+                <div class="relative float-animation">
+                    <img src="formal.jpg" alt="Muhammad Alhafiz Arya Wardhana" 
+                         class="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-white neon-glow">
+                    <div class="absolute -bottom-2 -right-2 bg-codelab-orange text-white rounded-full w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Title with animation -->
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight text-codelab-dark">
+                🏆 Dukung Saya Jadi <span class="orange-gradient-text">Mawapres Terfavorit</span> & Ikut Trial Class + Peluang Magang!
+            </h1>
+            
+            <!-- Description -->
+            <p class="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-gray-600">
+                Halo 👋 Saya Muhammad Alhafiz Arya Wardhana, mahasiswa Sistem Informasi sekaligus Founder Codelab – platform belajar coding bareng. Saat ini saya sedang berjuang untuk menjadi Mawapres Terfavorit 🎓 dan kamu bisa ikut berkontribusi sekaligus mendapatkan kesempatan belajar GRATIS!
+            </p>
+            
+            <!-- CTA Buttons with icons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://simapres.netlify.app/voting/" class="orange-button text-white px-8 py-3 rounded-full font-bold text-lg hover-scale flex items-center justify-center">
+                    <i class="fas fa-vote-yea mr-2"></i> Vote Sekarang
+                </a>
+                <a href="#dukungan" class="bg-white border-2 border-codelab-orange text-codelab-orange px-8 py-3 rounded-full font-bold text-lg hover-scale flex items-center justify-center">
+                    <i class="fas fa-upload mr-2"></i> Bukti Sudah Mendukung
+                </a>
+            </div>
+            
+            <!-- Social Proof -->
+            <div class="mt-12 flex justify-center space-x-4">
+                <div class="flex items-center text-gray-600">
+                    <i class="fas fa-users text-codelab-orange mr-2"></i>
+                    <span>500+ Pendukung</span>
+                </div>
+                <div class="flex items-center text-gray-600">
+                    <i class="fas fa-star text-codelab-orange mr-2"></i>
+                    <span>4.9/5 Rating</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cara Ikut Section -->
+    <section id="cara-ikut" class="py-16 px-4 bg-codelab-gray">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-codelab-dark">
+                <i class="fas fa-route text-codelab-orange mr-2"></i> Bagaimana Cara Ikut?
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale border-t-4 border-codelab-orange">
+                    <div class="bg-codelab-orange text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
+                    <h3 class="text-xl font-bold mb-3 text-codelab-dark">Vote saya sebagai Mawapres Terfavorit</h3>
+                    <p class="text-gray-600 mb-4">Klik tombol di bawah untuk memberikan dukunganmu</p>
+                    <a href="https://simapres.netlify.app/voting/" class="orange-button text-white px-4 py-2 rounded-full text-sm font-medium inline-block">
+                        <i class="fas fa-vote-yea mr-1"></i> Vote Sekarang
+                    </a>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale border-t-4 border-codelab-orange">
+                    <div class="bg-codelab-orange text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
+                    <h3 class="text-xl font-bold mb-3 text-codelab-dark">Screenshot bukti vote</h3>
+                    <p class="text-gray-600">Ambil tangkapan layar bukti bahwa kamu sudah memberikan vote</p>
+                    <div class="mt-4 flex justify-center">
+                        <i class="fas fa-camera text-4xl text-codelab-orange"></i>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 hover-scale border-t-4 border-codelab-orange">
+                    <div class="bg-codelab-orange text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
+                    <h3 class="text-xl font-bold mb-3 text-codelab-dark">Upload bukti + isi data diri</h3>
+                    <p class="text-gray-600">Upload bukti vote dan lengkapi form di bawah untuk mendapatkan hadiah</p>
+                    <div class="mt-4 flex justify-center">
+                        <i class="fas fa-file-upload text-4xl text-codelab-orange"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress indicator -->
+            <div class="mt-12 max-w-2xl mx-auto">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-codelab-orange">Proses Kampanye</span>
+                    <span class="text-sm font-medium text-codelab-orange">75%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-codelab-orange h-2.5 rounded-full" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Form Section -->
+    <section id="dukungan" class="py-16 px-4 pattern-bg">
+        <div class="container mx-auto max-w-2xl">
+            <div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+                <h2 class="text-3xl font-bold text-center mb-2 text-codelab-dark">
+                    <i class="fas fa-file-alt text-codelab-orange mr-2"></i> Form Dukungan Kamu
+                </h2>
+                <p class="text-center text-gray-600 mb-8">Isi form berikut untuk mengirimkan dukunganmu</p>
+                
+                <form action="http://localhost:3000/submit" method="POST" id="support-form" enctype="multipart/form-data">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">
+                                <i class="fas fa-user text-codelab-orange mr-1"></i> Nama Panggilan
+                            </label>
+                            <input type="text" id="name" name="name" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-codelab-orange focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="contact" class="block text-gray-700 font-medium mb-2">
+                                <i class="fas fa-address-book text-codelab-orange mr-1"></i> Kontak (Email atau No. HP)
+                            </label>
+                            <input type="text" id="contact" name="contact" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-codelab-orange focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <label for="proof" class="block text-gray-700 font-medium mb-2">
+                            <i class="fas fa-image text-codelab-orange mr-1"></i> Upload bukti vote (gambar)
+                        </label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-codelab-orange transition">
+                            <input type="file" id="proof" name="proof" accept="image/*" required class="hidden">
+                            <label for="proof" class="cursor-pointer">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-codelab-orange mb-2"></i>
+                                <p class="text-gray-600">Klik untuk upload atau drag and drop</p>
+                                <p class="text-sm text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</p>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full orange-button text-white px-6 py-3 rounded-full font-bold text-lg flex items-center justify-center">
+                        <i class="fas fa-paper-plane mr-2"></i> 🚀 Kirim Dukungan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Value Proposition Section -->
+    <section class="py-16 px-4 bg-white">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-codelab-dark">
+                <i class="fas fa-gift text-codelab-orange mr-2"></i> Apa yang Akan Kamu Dapatkan?
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start p-4 hover-scale bg-codelab-gray rounded-lg">
+                    <div class="bg-codelab-orange text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1 text-codelab-dark">Trial Class GRATIS</h3>
+                        <p class="text-gray-600">Dasar Web Development (HTML, CSS, JS)</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start p-4 hover-scale bg-codelab-gray rounded-lg">
+                    <div class="bg-codelab-orange text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1 text-codelab-dark">Mentoring santai & interaktif</h3>
+                        <p class="text-gray-600">Belajar bersama dengan mentor berpengalaman</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start p-4 hover-scale bg-codelab-gray rounded-lg">
+                    <div class="bg-codelab-orange text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1 text-codelab-dark">Peluang Magang Mandiri di Startup induk codelab (scover)</h3>
+                        <p class="text-gray-600">Kesempatan untuk mengembangkan karir di bidang teknologi</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start p-4 hover-scale bg-codelab-gray rounded-lg">
+                    <div class="bg-codelab-orange text-white w-10 h-10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1 text-codelab-dark">Follow-up via email</h3>
+                        <p class="text-gray-600">Mendapatkan jadwal & info kelas secara lengkap</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial -->
+            <!-- <div class="mt-16 bg-codelab-gray rounded-2xl p-8">
+                <h3 class="text-xl font-bold text-center mb-6 text-codelab-dark">Apa Kata Mereka?</h3>
+                <div class="flex flex-col md:flex-row items-center">
+                    <img src="https://picsum.photos/seed/testimonial/100/100.jpg" alt="Testimonial" class="w-20 h-20 rounded-full mb-4 md:mb-0 md:mr-6">
+                    <div>
+                        <p class="text-gray-600 italic">"Codelab benar-benar membantu saya memahami coding dengan cara yang menyenangkan. Mentor-nya sangat sabar dan kompeten!"</p>
+                        <p class="font-bold mt-2 text-codelab-orange">- Sarah, Mahasiswa Teknik Informatika</p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-16 px-4 bg-codelab-gray">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-codelab-dark">
+                <i class="fas fa-question-circle text-codelab-orange mr-2"></i> Pertanyaan Umum
+            </h2>
+            
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button class="faq-toggle w-full p-4 text-left font-bold text-codelab-dark flex justify-between items-center">
+                        <span>Apakah trial class benar-benar gratis?</span>
+                        <i class="fas fa-chevron-down text-codelab-orange"></i>
+                    </button>
+                    <div class="faq-content hidden p-4 pt-0 text-gray-600">
+                        Ya, trial class kami benar-benar gratis tanpa biaya tersembunyi. Kami ingin memberikan kesempatan belajar coding kepada semua orang.
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button class="faq-toggle w-full p-4 text-left font-bold text-codelab-dark flex justify-between items-center">
+                        <span>Bagaimana cara mengikuti kelas setelah trial?</span>
+                        <i class="fas fa-chevron-down text-codelab-orange"></i>
+                    </button>
+                    <div class="faq-content hidden p-4 pt-0 text-gray-600">
+                        Setelah mengikuti trial class, kamu akan mendapatkan informasi lengkap tentang cara mendaftar untuk kelas reguler kami melalui email.
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button class="faq-toggle w-full p-4 text-left font-bold text-codelab-dark flex justify-between items-center">
+                        <span>Apakah ada syarat untuk magang di Codelab?</span>
+                        <i class="fas fa-chevron-down text-codelab-orange"></i>
+                    </button>
+                    <div class="faq-content hidden p-4 pt-0 text-gray-600">
+                        Kami akan memilih beberapa peserta trial class yang menunjukkan antusiasme dan kemampuan teknis yang baik untuk mengikuti program magang.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="kontak" class="bg-codelab-dark text-white py-12 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col items-center">
+                <div class="text-2xl font-bold mb-4 flex items-center">
+                    <i class="fas fa-code mr-2 text-codelab-orange"></i>
+                    <span class="orange-gradient-text">Codelab</span>
+                </div>
+                
+                <p class="text-center mb-6">© 2025 Codelab | Muhammad Alhafiz Arya Wardhana</p>
+                
+                <div class="flex space-x-6 mb-6">
+                    <a href="#" class="text-gray-400 hover:text-codelab-orange transition transform hover:scale-110">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-codelab-orange transition transform hover:scale-110">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-codelab-orange transition transform hover:scale-110">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-codelab-orange transition transform hover:scale-110">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="text-center text-sm text-gray-400">
+                    <p>Jl. Danau Toba No.24 Blok E6, Sawojajar, Kec. Kedungkandang, Kota Malang, Jawa Timur, Indonesia</p>
+                    <p class="mt-1">wardhanahafiz567@gmail.com | +62 81348774066</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 animate-scale-up">
+            <div class="text-center">
+                <div class="bg-codelab-orange text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-codelab-dark">Terima kasih!</h3>
+                <p class="text-gray-600 mb-6">Dukungan kamu sudah tercatat. Tim Codelab akan menghubungi jika kamu terpilih.</p>
+                <button id="close-modal" class="orange-button text-white px-6 py-3 rounded-full font-bold">
+                    <i class="fas fa-times mr-2"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-codelab-orange text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-codelab-orange">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Form submission
+        document.getElementById('support-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                if (response.ok) {
+                    document.getElementById('success-modal').classList.remove('hidden');
+                    form.reset();
+                    // Tutup modal otomatis setelah 4 detik
+                    if (window.successModalTimeout) clearTimeout(window.successModalTimeout);
+                    window.successModalTimeout = setTimeout(function() {
+                        document.getElementById('success-modal').classList.add('hidden');
+                    }, 4000);
+                } else {
+                    const data = await response.json();
+                    alert(data.errors ? data.errors.map(e => e.message).join(', ') : 'Gagal mengirim. Coba lagi.');
+                }
+            } catch (err) {
+                alert('Gagal mengirim. Coba lagi.');
+            }
+        });
+        
+        // Close modal
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('success-modal').classList.add('hidden');
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('success-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+        
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                
+                if (content.classList.contains('hidden')) {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // File upload label update
+        document.getElementById('proof').addEventListener('change', function() {
+            const fileName = this.files[0]?.name || 'Pilih file...';
+            const label = this.nextElementSibling.querySelector('p');
+            if (label) {
+                label.textContent = fileName;
+            }
+        });
+        
+        // Add animation on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
