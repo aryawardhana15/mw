@@ -1,0 +1,6 @@
+node_modules/
+uploads/
+submissions.csv
+.env
+.DS_Store
+Thumbs.db
