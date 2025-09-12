@@ -230,7 +230,7 @@
                 </a>
             </div>
             
-            <!-- Social Proof -->
+          
             <div class="mt-12 flex justify-center space-x-4">
                 <!-- <div class="flex items-center text-gray-600">
                     <i class="fas fa-users text-codelab-orange mr-2"></i>
@@ -343,6 +343,23 @@
                     </button>
                 </form>
             </div>
+        </div>
+    </section>
+    
+    <!-- Daftar Dukungan Section -->
+    <section id="daftar" class="py-16 px-4 bg-codelab-gray">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-codelab-dark">
+                <i class="fas fa-list text-codelab-orange mr-2"></i> Daftar Dukungan Masuk
+            </h2>
+            <div class="flex justify-between items-center mb-6">
+                <p class="text-gray-600">Berikut daftar pengirim beserta bukti yang sudah diupload.</p>
+                <button id="refresh-entries" class="orange-button text-white px-4 py-2 rounded-full font-medium hover-scale">
+                    <i class="fas fa-rotate mr-2"></i> Refresh
+                </button>
+            </div>
+            <div id="entries-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="entries-empty" class="text-center text-gray-500 hidden mt-8">Belum ada dukungan.</div>
         </div>
     </section>
     
@@ -619,6 +636,62 @@
         document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
         });
+        
+        // Load daftar dukungan dari backend
+        const API_BASE = 'https://mw-production-7b5b.up.railway.app';
+        async function loadEntries() {
+            const container = document.getElementById('entries-list');
+            const emptyState = document.getElementById('entries-empty');
+            if (!container) return;
+            container.innerHTML = '';
+            emptyState?.classList.add('hidden');
+            try {
+                const res = await fetch(`${API_BASE}/entries`);
+                if (!res.ok) throw new Error('Gagal memuat entri');
+                const data = await res.json();
+                if (!Array.isArray(data) || data.length === 0) {
+                    emptyState?.classList.remove('hidden');
+                    return;
+                }
+                data.forEach(item => {
+                    const imageUrl = `${API_BASE}${item.fileUrl}`;
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl shadow-lg p-4 hover-scale';
+                    card.innerHTML = `
+                        <div class="flex items-center mb-3">
+                            <div class="bg-codelab-orange text-white w-10 h-10 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-codelab-dark">${item.name || '-'}</p>
+                                <p class="text-sm text-gray-500">${item.contact || '-'}</p>
+                            </div>
+                        </div>
+                        <div class="rounded-lg overflow-hidden border border-gray-200">
+                            <img src="${imageUrl}" alt="Bukti vote" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="mt-3 flex justify-between items-center text-sm text-gray-600">
+                            <span><i class="far fa-clock mr-1"></i>${new Date(item.timestamp).toLocaleString()}</span>
+                            <a href="${imageUrl}" target="_blank" class="text-codelab-orange hover:underline"><i class="fas fa-download mr-1"></i>Unduh</a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (e) {
+                emptyState?.classList.remove('hidden');
+            }
+        }
+        
+        // Auto load saat halaman dibuka
+        loadEntries();
+        
+        // Tombol refresh daftar
+        const refreshBtn = document.getElementById('refresh-entries');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                loadEntries();
+            });
+        }
     </script>
 </body>
 </html>
