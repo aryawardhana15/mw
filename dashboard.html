@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Dukungan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Dashboard Dukungan</h1>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <table class="w-full" id="entries-table">
+                <thead>
+                    <tr class="border-b">
+                        <th class="text-left p-3">Timestamp</th>
+                        <th class="text-left p-3">Nama</th>
+                        <th class="text-left p-3">Kontak</th>
+                        <th class="text-left p-3">File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        fetch('/entries')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#entries-table tbody');
+                if (data.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="4" class="text-center p-4">Belum ada data.</td>`;
+                    tableBody.appendChild(row);
+                } else {
+                    data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    data.forEach(entry => {
+                        const row = document.createElement('tr');
+                        row.classList.add('border-b', 'hover:bg-gray-50');
+                        row.innerHTML = `
+                            <td class="p-3">${entry.timestamp}</td>
+                            <td class="p-3">${entry.name}</td>
+                            <td class="p-3">${entry.contact}</td>
+                            <td class="p-3"><a href="${entry.fileUrl}" target="_blank" class="text-blue-500 hover:underline">${entry.filename}</a></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching entries:', error);
+                const tableBody = document.querySelector('#entries-table tbody');
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="4" class="text-center p-4 text-red-500">Gagal memuat data.</td>`;
+                tableBody.appendChild(row);
+            });
+    </script>
+
+</body>
+</html>
